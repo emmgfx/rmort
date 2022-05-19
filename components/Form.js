@@ -13,7 +13,6 @@ const Form = ({ onValuesUpdated = () => {} }) => {
       onValuesUpdated([]);
       return;
     }
-    // this.working = true;
 
     const fees = [];
 
@@ -43,8 +42,6 @@ const Form = ({ onValuesUpdated = () => {} }) => {
       let interests =
         Math.round(((pendingCapital * (tae / 12)) / 100) * 100) / 100;
       let amortization = fee - interests;
-      // let _date = moment(date.add(1, "m").endOf("month"));
-      // jan312009.setMonth(jan312009.getMonth() + 8);
       let _date = new Date(date);
       _date.setDate(_date.getMonth() + 1);
 
@@ -69,8 +66,6 @@ const Form = ({ onValuesUpdated = () => {} }) => {
     }
 
     onValuesUpdated(fees);
-
-    // this.working = false;
   }, [months, capital, tae, startDate]);
 
   return (
