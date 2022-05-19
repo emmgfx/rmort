@@ -50,7 +50,7 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-10">
-      <h1 className="text-3xl font-extrabold">RMORT? What's this?</h1>
+      <h1 className="text-3xl font-extrabold">RMORT? What&apos;s this?</h1>
       <div className="h-4" />
       <p>
         This page was made to help you to understand how you money can fly away
@@ -60,7 +60,7 @@ export default function Home() {
       </p>
       <div className="h-2" />
       <p>
-        The name "RMORT" doesn't means anything special, it's just R
+        The name "RMORT" doesn&apos;t means anything special, it&apos;s just R
         <del className="text-white/50">EACT</del>MORT
         <del className="text-white/50">GAGE</del>.
       </p>
