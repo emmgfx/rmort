@@ -60,8 +60,8 @@ export default function Home() {
       </p>
       <div className="h-2" />
       <p>
-        The name "RMORT" doesn&apos;t means anything special, it&apos;s just R
-        <del className="text-white/50">EACT</del>MORT
+        The name &quot;RMORT&quot; doesn&apos;t means anything special,
+        it&apos;s just R<del className="text-white/50">EACT</del>MORT
         <del className="text-white/50">GAGE</del>.
       </p>
       <div className="h-8" />
@@ -80,7 +80,6 @@ export default function Home() {
                   data={data}
                   margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
                 >
-                  >
                   <Line
                     type="monotone"
                     dataKey="Fee"
