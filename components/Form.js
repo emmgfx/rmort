@@ -23,6 +23,7 @@ const Form = ({ onValuesUpdated = () => {} }) => {
     let month = 0;
     let year = 0;
     let date = new Date(startDate);
+    console.log(date);
 
     while (
       Math.round(pendingCapital * 100) / 100 > 0 &&
@@ -42,10 +43,10 @@ const Form = ({ onValuesUpdated = () => {} }) => {
       let interests =
         Math.round(((pendingCapital * (tae / 12)) / 100) * 100) / 100;
       let amortization = fee - interests;
-      let _date = new Date(date);
-      _date.setDate(_date.getMonth() + 1);
-
       month++;
+      let _date = new Date(date);
+      _date.setMonth(_date.getMonth() + month);
+
       interestsTotal += interests;
       pendingCapital -= amortization;
 

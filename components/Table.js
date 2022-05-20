@@ -26,17 +26,17 @@ const Table = ({ values }) => {
               )}
             >
               <td className="px-3 py-2">
-                {new Date(row.date).toISOString().substring(0, 10)}
+                {new Date(row.date).toISOString().substring(0, 7)}
               </td>
               <td className="px-3 py-2">{row.month}</td>
-              <td className="px-3 py-2">{row.year}</td>
-              <td className="px-3 py-2">
+              <td className="px-3 py-2">{row.year + 1}</td>
+              <td className="px-3 py-2 text-yellow-300">
                 {new Intl.NumberFormat({}).format(row.fee)}
               </td>
-              <td className="px-3 py-2">
+              <td className="px-3 py-2 text-green-500">
                 {new Intl.NumberFormat({}).format(row.amortization)}
               </td>
-              <td className="px-3 py-2">
+              <td className="px-3 py-2 text-red-500">
                 {new Intl.NumberFormat({}).format(row.interests)}
               </td>
               <td className="px-3 py-2">
