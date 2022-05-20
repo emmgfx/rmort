@@ -9,7 +9,7 @@ const Form = ({ onValuesUpdated = () => {} }) => {
   );
 
   useEffect(() => {
-    if (months <= 0 || months > 480) {
+    if (months <= 0 || months > 480 || tae <= 0 || capital <= 0) {
       onValuesUpdated([]);
       return;
     }
@@ -109,6 +109,10 @@ const Form = ({ onValuesUpdated = () => {} }) => {
           value={tae}
           onChange={(e) => setTae(e.target.value)}
           className="text-indigo-100 font-bold rounded w-full bg-indigo-900 border-indigo-900 border-2 focus:ring-0 focus:border-indigo-500"
+          min={0.01}
+          max={30}
+          step={0.01}
+          required
         />
       </div>
       <div>
