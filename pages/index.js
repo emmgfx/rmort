@@ -11,6 +11,8 @@ import Header from "../components/Header";
 export default function Home() {
   const [values, setValues] = useState([]);
 
+  const interests = values.reduce((acc, row) => acc + row.interests, 0);
+
   return (
     <>
       <Head>
@@ -24,7 +26,14 @@ export default function Home() {
         <Header />
         <div className="h-8" />
         <Form onValuesUpdated={(values) => setValues(values)} />
-        <div className="h-8" />
+
+        <p className="pt-12 pb-14 text-2xl text-center uppercase font-bold">
+          {values.length > 0
+            ? `🤖 You'll pay ~${new Intl.NumberFormat({}).format(
+                interests
+              )} in interests`
+            : "🤖 Fill the form to see the issue"}
+        </p>
 
         {values.length > 0 && (
           <>
