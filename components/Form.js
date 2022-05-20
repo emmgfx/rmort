@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 
 const Form = ({ onValuesUpdated = () => {} }) => {
-  const [months, setMonths] = useState(480);
-  const [capital, setCapital] = useState(95000);
-  const [tae, setTae] = useState(1.5);
+  const [months, setMonths] = useState(0);
+  const [capital, setCapital] = useState(0);
+  const [tae, setTae] = useState(0);
   const [startDate, setStartDate] = useState(
     new Date().toISOString().substring(0, 10)
   );
