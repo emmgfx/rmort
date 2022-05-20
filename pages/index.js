@@ -15,6 +15,10 @@ export default function Home() {
     <>
       <Head>
         <title>RMORT - Understand your mortgage</title>
+        <meta
+          name="description"
+          content="Understand how you money can fly away with a mortgage and how much relevant are the periodical amortizations"
+        />
       </Head>
       <div className="container mx-auto p-10">
         <Header />

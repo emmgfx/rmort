@@ -2,8 +2,8 @@ import classNames from "classnames";
 
 const Table = ({ values }) => {
   return (
-    <div className="">
-      <table className="w-full text-left">
+    <div className="overflow-x-auto">
+      <table className="w-full text-left table-auto">
         <thead>
           <tr>
             <th className="px-3 py-2">Date</th>
@@ -21,7 +21,7 @@ const Table = ({ values }) => {
             <tr
               key={index}
               className={classNames(
-                "hover:bg-white/10",
+                "text-sm transition ease-in-out hover:bg-indigo-900 rounded-md overflow-hidden",
                 index % 2 === 0 && "bg-white/5"
               )}
             >
