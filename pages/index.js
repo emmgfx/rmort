@@ -26,7 +26,7 @@ export default function Home() {
         />
       </Head>
       <div className="container mx-auto p-5 md:p-10">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <Header />
           <Form onNewAmortizationTable={onNewAmortizationTable} />
         </div>
