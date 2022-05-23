@@ -1,6 +1,7 @@
 import classNames from "classnames";
+import { numberFormat } from "../shared/utils";
 
-const Table = ({ values }) => {
+const Table = ({ amortizationTable }) => {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-left table-auto">
@@ -17,12 +18,14 @@ const Table = ({ values }) => {
           </tr>
         </thead>
         <tbody>
-          {values.map((row, index) => (
+          {amortizationTable.map((row, index) => (
             <tr
               key={index}
               className={classNames(
                 "text-sm transition ease-in-out hover:bg-indigo-900 rounded-md overflow-hidden",
-                index % 2 === 0 && "bg-white/5"
+                index % 2 === 0 && "bg-white/5",
+                row.type === "voluntary" && "bg-green-800",
+                row.type === "voluntary" && "hover:bg-green-500"
               )}
             >
               <td className="px-3 py-2">
@@ -31,20 +34,18 @@ const Table = ({ values }) => {
               <td className="px-3 py-2">{row.month}</td>
               <td className="px-3 py-2">{row.year + 1}</td>
               <td className="px-3 py-2 text-yellow-300">
-                {new Intl.NumberFormat({}).format(row.fee)}
+                {numberFormat(row.fee)}
               </td>
               <td className="px-3 py-2 text-green-500">
-                {new Intl.NumberFormat({}).format(row.amortization)}
+                {numberFormat(row.amortization)}
               </td>
               <td className="px-3 py-2 text-red-500">
-                {new Intl.NumberFormat({}).format(row.interests)}
+                {numberFormat(row.interests)}
               </td>
               <td className="px-3 py-2">
-                {new Intl.NumberFormat({}).format(row.interestsTotal)}
+                {numberFormat(row.interestsSumatory)}
               </td>
-              <td className="px-3 py-2">
-                {new Intl.NumberFormat({}).format(row.pendingCapital)}
-              </td>
+              <td className="px-3 py-2">{numberFormat(row.pendingCapital)}</td>
             </tr>
           ))}
         </tbody>

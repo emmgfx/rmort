@@ -1,143 +1,108 @@
 import { useState, useEffect } from "react";
 
-const Form = ({ onValuesUpdated = () => {} }) => {
-  const [months, setMonths] = useState(0);
-  const [capital, setCapital] = useState(0);
-  const [tae, setTae] = useState(0);
+import Input from "./Input";
+
+import getAmortizationTable from "../shared/amortizationTable";
+import { monthsToYearsAndMonths } from "../shared/utils";
+
+const Form = ({ onNewAmortizationTable = () => {} }) => {
+  const [months, setMonths] = useState(480);
+  const [capital, setCapital] = useState(95000);
+  const [tae, setTae] = useState(1);
   const [startDate, setStartDate] = useState(
     new Date().toISOString().substring(0, 10)
   );
+  const [VPAAmount, setVPAAmount] = useState(3000);
+  const [VPAInterval, setVPAInterval] = useState(12);
 
   useEffect(() => {
     if (months <= 0 || months > 480 || tae <= 0 || capital <= 0) {
-      onValuesUpdated([]);
+      onNewAmortizationTable([]);
       return;
     }
 
-    const fees = [];
+    const amortizationTable = getAmortizationTable({
+      months,
+      capital,
+      tae,
+      startDate,
+      VPAInterval,
+      VPAAmount,
+    });
 
-    const originalRemainingMonths = months;
-    const originalRemainingCapital = capital;
-    let interestsTotal = 0;
-    let pendingCapital = originalRemainingCapital;
-    let month = 0;
-    let year = 0;
-    let date = new Date(startDate);
-    console.log(date);
-
-    while (
-      Math.round(pendingCapital * 100) / 100 > 0 &&
-      month <= originalRemainingMonths
-    ) {
-      let fee =
-        Math.round(
-          ((pendingCapital * (tae / 12)) /
-            (100 *
-              (1 -
-                Math.pow(
-                  1 + tae / 12 / 100,
-                  month - originalRemainingMonths
-                )))) *
-            100
-        ) / 100;
-      let interests =
-        Math.round(((pendingCapital * (tae / 12)) / 100) * 100) / 100;
-      let amortization = fee - interests;
-      month++;
-      let _date = new Date(date);
-      _date.setMonth(_date.getMonth() + month);
-
-      interestsTotal += interests;
-      pendingCapital -= amortization;
-
-      fees.push({
-        type: "mandatory",
-        originalRemainingMonths: originalRemainingMonths,
-        originalRemainingCapital: originalRemainingCapital,
-        month: month,
-        year: Math.floor((month - 1) / 12),
-        fee: fee,
-        tae: tae,
-        interests: interests,
-        interestsTotal: interestsTotal,
-        pendingCapital: pendingCapital,
-        amortization: amortization,
-        date: _date,
-      });
-    }
-
-    onValuesUpdated(fees);
-  }, [months, capital, tae, startDate]);
+    onNewAmortizationTable(amortizationTable);
+  }, [
+    months,
+    capital,
+    tae,
+    startDate,
+    VPAInterval,
+    VPAAmount,
+    onNewAmortizationTable,
+  ]);
 
   return (
-    <form className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div>
-        <label className="block mb-2 text-sm font-bold uppercase">
-          Remaining months:
-        </label>
-        <input
+    <form>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Input
+          label="Remaining months:"
+          subtitle={monthsToYearsAndMonths(months)}
           type="number"
           min={0}
           max={480}
           value={months}
           onChange={(e) => setMonths(e.target.value)}
-          className="text-indigo-100 font-bold rounded w-full bg-indigo-900 border-indigo-900 border-2 focus:ring-0 focus:border-indigo-500"
         />
-        <div className="h-2" />
-        <div className="text-sm text-slate-300 text-right">
-          {monthsToYearsAndMonths(months)}
-        </div>
-      </div>
-      <div>
-        <label className="block mb-2 text-sm font-bold uppercase">
-          Remaining capital:
-        </label>
-        <input
+        <Input
+          label="Remaining capital:"
+          subtitle="Currency agnostic"
           type="number"
+          min={0}
           value={capital}
           onChange={(e) => setCapital(e.target.value)}
-          className="text-indigo-100 font-bold rounded w-full bg-indigo-900 border-indigo-900 border-2 focus:ring-0 focus:border-indigo-500"
         />
-        <div className="h-2" />
-        <div className="text-sm text-slate-300 text-right">
-          Currency agnostic
-        </div>
-      </div>
-      <div>
-        <label className="block mb-2 text-sm font-bold uppercase">TAE:</label>
-        <input
+        <Input
+          label="TAE:"
           type="number"
-          value={tae}
-          onChange={(e) => setTae(e.target.value)}
-          className="text-indigo-100 font-bold rounded w-full bg-indigo-900 border-indigo-900 border-2 focus:ring-0 focus:border-indigo-500"
           min={0.01}
           max={30}
           step={0.01}
-          required
+          value={tae}
+          onChange={(e) => setTae(e.target.value)}
         />
-      </div>
-      <div>
-        <label className="block mb-2 text-sm font-bold uppercase">
-          Start date:
-        </label>
-        <input
+        <Input
+          label="Start date:"
           type="date"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
           style={{ colorScheme: "dark" }}
-          className="text-indigo-100 font-bold rounded w-full bg-indigo-900 border-indigo-900 border-2 focus:ring-0 focus:border-indigo-500"
+        />
+        <Input
+          type="number"
+          label="Voluntary amort. amount"
+          value={VPAAmount}
+          step={1}
+          min={0}
+          onChange={(e) => setVPAAmount(e.target.value)}
+        />
+        <Input
+          type="number"
+          label="Voluntary amort. interval"
+          step={1}
+          min={0}
+          value={VPAInterval}
+          onChange={(e) => setVPAInterval(e.target.value)}
+          subtitle={`${VPAAmount} each ${VPAInterval} months`}
         />
       </div>
+      {/* <div className="h-6" /> */}
+      {/* <h3 className="text-xl font-bold uppercase flex items-center gap-8">
+        Voluntary periodic amortization
+      </h3> */}
+      {/* <div className="h-6" /> */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
     </form>
   );
-};
-
-const monthsToYearsAndMonths = (months) => {
-  const years = Math.floor(months / 12);
-  const monthsLeft = months % 12;
-  return monthsLeft === 0
-    ? `${years} years`
-    : `${years} years and ${monthsLeft} months`;
 };
 
 export default Form;

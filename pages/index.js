@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 import Form from "../components/Form";
 import Table from "../components/Table";
@@ -9,9 +9,13 @@ import Head from "next/head";
 import Header from "../components/Header";
 
 export default function Home() {
-  const [values, setValues] = useState([]);
+  const [amortizationTable, setAmortizationTable] = useState([]);
+  const interests = amortizationTable.reduce((a, r) => a + r.interests, 0);
 
-  const interests = values.reduce((acc, row) => acc + row.interests, 0);
+  const onNewAmortizationTable = useCallback(
+    (values) => setAmortizationTable(values),
+    [setAmortizationTable]
+  );
 
   return (
     <>
@@ -22,32 +26,32 @@ export default function Home() {
           content="Understand how you money can fly away with a mortgage and how much relevant are the periodical amortizations"
         />
       </Head>
-      <div className="container mx-auto p-10">
+      <div className="container mx-auto p-5 md:p-10">
         <Header />
         <div className="h-8" />
-        <Form onValuesUpdated={(values) => setValues(values)} />
+        <Form onNewAmortizationTable={onNewAmortizationTable} />
+        <div className="h-16" />
 
-        <p className="pt-12 pb-14 text-2xl text-center uppercase font-bold">
+        {/* <p className="pt-12 pb-14 text-2xl text-center uppercase font-bold">
           {values.length > 0
             ? `🤖 You'll pay ~${new Intl.NumberFormat({}).format(
                 interests
               )} in interests`
             : "🤖 Fill the form to see the issue"}
-        </p>
+        </p> */}
 
-        {values.length > 0 && (
+        {amortizationTable.length > 0 && (
           <>
             <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-[2fr_1fr] gap-4">
               <ChartCard>
-                <ChartLines values={values} />
+                <ChartLines amortizationTable={amortizationTable} />
               </ChartCard>
               <ChartCard>
-                <ChartPie values={values} />
+                <ChartPie amortizationTable={amortizationTable} />
               </ChartCard>
             </div>
             <div className="h-8" />
-
-            <Table values={values} />
+            <Table amortizationTable={amortizationTable} />
           </>
         )}
       </div>

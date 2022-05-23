@@ -1,25 +1,37 @@
 import {
-  CartesianGrid,
   Legend,
   Pie,
   PieChart,
   ResponsiveContainer,
   Tooltip,
-  XAxis,
-  YAxis,
   Cell,
 } from "recharts";
 
-const COLORS = ["#82ca9d", "#f44336"];
+const COLORS = ["#f8dc46", "#82ca9d", "#f44336"];
 
-const ChartPie = ({ values = [] }) => {
-  const capital = values.reduce((acc, row) => acc + row.amortization, 0);
-  const interests = values.reduce((acc, row) => acc + row.interests, 0);
+const ChartPie = ({ amortizationTable = [] }) => {
+  const capitalMandatory = amortizationTable.reduce((acc, row) => {
+    if (row.type === "mandatory") return acc + row.amortization;
+    return acc;
+  }, 0);
+  const capitalVoluntary = amortizationTable.reduce((acc, row) => {
+    if (row.type === "voluntary") return acc + row.amortization;
+    return acc;
+  }, 0);
+  const interests = amortizationTable.reduce(
+    (acc, row) => acc + row.interests,
+    0
+  );
 
+  console.log({ capitalMandatory, capitalVoluntary, interests });
   const data = [
     {
-      name: "Capital",
-      value: Math.round(capital * 100) / 100,
+      name: "Capital (M)",
+      value: Math.round(capitalMandatory * 100) / 100,
+    },
+    {
+      name: "Capital (V)",
+      value: Math.round(capitalVoluntary * 100) / 100,
     },
     { name: "Interests", value: Math.round(interests * 100) / 100 },
   ];
@@ -36,9 +48,7 @@ const ChartPie = ({ values = [] }) => {
           outerRadius={80}
           stroke="#312e81"
           label
-          // paddingAngle={5}
-          // strokeWidth={0}
-          // labelLine
+          isAnimationActive={false}
         >
           {data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

@@ -9,10 +9,10 @@ import {
   YAxis,
 } from "recharts";
 
-const ChartLines = ({ values = [] }) => {
+const ChartLines = ({ amortizationTable = [] }) => {
   const data =
-    values.length > 12
-      ? values
+    amortizationTable.length > 12
+      ? amortizationTable
           .map((row, index, rows) => {
             if (row.year === rows[index - 1]?.year || 0) return null;
             return {
@@ -22,7 +22,7 @@ const ChartLines = ({ values = [] }) => {
             };
           })
           .filter((row) => row !== null)
-      : values.map((row, index) => ({
+      : amortizationTable.map((row, index) => ({
           name: `Month ${row.month}`,
           Fee: row.fee,
           Interests: row.interests,
@@ -37,6 +37,7 @@ const ChartLines = ({ values = [] }) => {
           stroke="#82ca9d"
           strokeWidth={4}
           dot={false}
+          isAnimationActive={false}
         />
         <Line
           type="natural"
@@ -44,6 +45,7 @@ const ChartLines = ({ values = [] }) => {
           stroke="#f44336"
           strokeWidth={4}
           dot={false}
+          isAnimationActive={false}
         />
         <CartesianGrid strokeWidth=".5" stroke="#6366f1" />
         <XAxis dataKey="name" stroke="#e0e6fe" />
