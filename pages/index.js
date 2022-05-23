@@ -24,6 +24,10 @@ export default function Home() {
           name="description"
           content="Understand how you money can fly away with a mortgage and how much relevant are the periodical amortizations"
         />
+        <meta property="og:image" content="/screenshot.png" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:creator" content="@emmgfx" />
       </Head>
       <div className="container mx-auto p-5 md:p-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
