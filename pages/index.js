@@ -10,7 +10,6 @@ import Header from "../components/Header";
 
 export default function Home() {
   const [amortizationTable, setAmortizationTable] = useState([]);
-  const interests = amortizationTable.reduce((a, r) => a + r.interests, 0);
 
   const onNewAmortizationTable = useCallback(
     (values) => setAmortizationTable(values),
@@ -27,19 +26,11 @@ export default function Home() {
         />
       </Head>
       <div className="container mx-auto p-5 md:p-10">
-        <Header />
-        <div className="h-8" />
-        <Form onNewAmortizationTable={onNewAmortizationTable} />
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <Header />
+          <Form onNewAmortizationTable={onNewAmortizationTable} />
+        </div>
         <div className="h-16" />
-
-        {/* <p className="pt-12 pb-14 text-2xl text-center uppercase font-bold">
-          {values.length > 0
-            ? `🤖 You'll pay ~${new Intl.NumberFormat({}).format(
-                interests
-              )} in interests`
-            : "🤖 Fill the form to see the issue"}
-        </p> */}
-
         {amortizationTable.length > 0 && (
           <>
             <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-[2fr_1fr] gap-4">

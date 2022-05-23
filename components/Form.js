@@ -6,14 +6,14 @@ import getAmortizationTable from "../shared/amortizationTable";
 import { monthsToYearsAndMonths } from "../shared/utils";
 
 const Form = ({ onNewAmortizationTable = () => {} }) => {
-  const [months, setMonths] = useState(480);
-  const [capital, setCapital] = useState(95000);
-  const [tae, setTae] = useState(1);
+  const [months, setMonths] = useState(0);
+  const [capital, setCapital] = useState(0);
+  const [tae, setTae] = useState(0);
   const [startDate, setStartDate] = useState(
     new Date().toISOString().substring(0, 10)
   );
-  const [VPAAmount, setVPAAmount] = useState(3000);
-  const [VPAInterval, setVPAInterval] = useState(12);
+  const [VPAAmount, setVPAAmount] = useState(0);
+  const [VPAInterval, setVPAInterval] = useState(0);
 
   useEffect(() => {
     if (months <= 0 || months > 480 || tae <= 0 || capital <= 0) {
@@ -43,7 +43,7 @@ const Form = ({ onNewAmortizationTable = () => {} }) => {
 
   return (
     <form>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-4 gap-y-8">
         <Input
           label="Remaining months:"
           subtitle={monthsToYearsAndMonths(months)}
@@ -64,6 +64,7 @@ const Form = ({ onNewAmortizationTable = () => {} }) => {
         <Input
           label="TAE:"
           type="number"
+          subtitle="Your current TAE"
           min={0.01}
           max={30}
           step={0.01}
@@ -74,6 +75,7 @@ const Form = ({ onNewAmortizationTable = () => {} }) => {
           label="Start date:"
           type="date"
           value={startDate}
+          subtitle="Optional"
           onChange={(e) => setStartDate(e.target.value)}
           style={{ colorScheme: "dark" }}
         />
@@ -81,6 +83,7 @@ const Form = ({ onNewAmortizationTable = () => {} }) => {
           type="number"
           label="Voluntary amort. amount"
           value={VPAAmount}
+          subtitle="How much extra you can pay?"
           step={1}
           min={0}
           onChange={(e) => setVPAAmount(e.target.value)}
