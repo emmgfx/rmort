@@ -16,6 +16,7 @@ const Header = () => (
       <a
         href="https://github.com/emmgfx/rmort"
         target="_blank"
+        rel="noreferrer noopener"
         className="text-indigo-400"
       >
         open source project
@@ -24,6 +25,7 @@ const Header = () => (
       <a
         href="https://www.viciana.me"
         target="_blank"
+        rel="noreferrer noopener"
         className="text-indigo-400"
       >
         Josep Viciana
