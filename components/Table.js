@@ -1,4 +1,5 @@
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
+
 import { numberFormat } from "../shared/utils";
 
 const Table = ({ amortizationTable }) => {
@@ -21,7 +22,7 @@ const Table = ({ amortizationTable }) => {
           {amortizationTable.map((row, index) => (
             <tr
               key={index}
-              className={classNames(
+              className={twMerge(
                 "text-sm transition ease-in-out hover:bg-indigo-900 rounded-md overflow-hidden",
                 index % 2 === 0 && "bg-white/5",
                 row.type === "voluntary" && "bg-green-800",

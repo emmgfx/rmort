@@ -16,11 +16,11 @@
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",
     "autoprefixer": "^10.4.17",
-    "classnames": "^2.5.1",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.1.0",
     "postcss": "^8.4.33",
     "recharts": "^2.10.4",
+    "tailwind-merge": "^2.2.0",
     "tailwindcss": "^3.4.1"
   }
 }
