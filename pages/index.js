@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 
 import Form from "../components/Form";
 import Table from "../components/Table";
@@ -7,13 +7,65 @@ import ChartLines from "../components/ChartLines";
 import ChartPie from "../components/ChartPie";
 import Head from "next/head";
 import Header from "../components/Header";
+import { useFormStore } from "../store/form";
+import getAmortizationTable from "../shared/amortizationTable";
 
 export default function Home() {
-  const [amortizationTable, setAmortizationTable] = useState([]);
+  const { months, capital, tae, startDate, vpaAmount, vpaInterval } =
+    useFormStore((state) => state);
 
-  const onNewAmortizationTable = useCallback(
-    (values) => setAmortizationTable(values),
-    [setAmortizationTable]
+  const amortizationTable = useMemo(
+    () =>
+      getAmortizationTable({
+        months,
+        capital,
+        tae,
+        startDate,
+        vpaInterval,
+        vpaAmount,
+      }),
+    [months, capital, tae, startDate, vpaInterval, vpaAmount]
+  );
+
+  const worstAmortizationTable = useMemo(
+    () =>
+      getAmortizationTable({
+        months,
+        capital,
+        tae: 6,
+        startDate,
+        vpaInterval,
+        vpaAmount,
+      }),
+    [months, capital, startDate, vpaInterval, vpaAmount]
+  );
+
+  const bestAmortizationTable = useMemo(
+    () =>
+      getAmortizationTable({
+        months,
+        capital,
+        tae: 1,
+        startDate,
+        vpaInterval,
+        vpaAmount,
+      }),
+    [months, capital, startDate, vpaInterval, vpaAmount]
+  );
+
+  const bestScenarioTotalInterests = useMemo(
+    () => bestAmortizationTable.reduce((n, { interests }) => n + interests, 0),
+    [bestAmortizationTable]
+  );
+
+  const regularScenarioTotalInterests = useMemo(
+    () => amortizationTable.reduce((n, { interests }) => n + interests, 0),
+    [amortizationTable]
+  );
+
+  const worstScenarioTotalInterests = useMemo(
+    () => worstAmortizationTable.reduce((n, { interests }) => n + interests, 0),
+    [worstAmortizationTable]
   );
 
   return (
@@ -36,7 +88,28 @@ export default function Home() {
       <div className="container mx-auto p-5 md:p-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <Header />
-          <Form onNewAmortizationTable={onNewAmortizationTable} />
+          <Form />
+        </div>
+        <div className="h-16" />
+        <div className="grid grid-cols-3 text-center gap-3">
+          <div className="text-emerald-300 bg-indigo-900 rounded-lg p-10">
+            Best scenario interests sumatory:{" "}
+            <div className="font-semibold text-4xl">
+              {new Intl.NumberFormat().format(bestScenarioTotalInterests)}
+            </div>
+          </div>
+          <div className="text-rose-400 bg-indigo-900 rounded-lg p-10">
+            Worst scenario interests sumatory:
+            <div className="font-semibold text-4xl">
+              {new Intl.NumberFormat().format(worstScenarioTotalInterests)}
+            </div>
+          </div>
+          <div className="text-yellow-300 bg-indigo-900 rounded-lg p-10">
+            Indicated scenario interests sumatory:{" "}
+            <div className="font-semibold text-4xl">
+              {new Intl.NumberFormat().format(regularScenarioTotalInterests)}
+            </div>
+          </div>
         </div>
         <div className="h-16" />
         {amortizationTable.length > 0 && (

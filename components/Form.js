@@ -1,45 +1,23 @@
-import { useState, useEffect } from "react";
-
 import Input from "./Input";
 
-import getAmortizationTable from "../shared/amortizationTable";
 import { monthsToYearsAndMonths } from "../shared/utils";
+import { useFormStore } from "../store/form";
 
-const Form = ({ onNewAmortizationTable = () => {} }) => {
-  const [months, setMonths] = useState(0);
-  const [capital, setCapital] = useState(0);
-  const [tae, setTae] = useState(0);
-  const [startDate, setStartDate] = useState(
-    new Date().toISOString().substring(0, 10)
-  );
-  const [VPAAmount, setVPAAmount] = useState(0);
-  const [VPAInterval, setVPAInterval] = useState(0);
-
-  useEffect(() => {
-    if (months <= 0 || months > 480 || tae <= 0 || capital <= 0) {
-      onNewAmortizationTable([]);
-      return;
-    }
-
-    const amortizationTable = getAmortizationTable({
-      months,
-      capital,
-      tae,
-      startDate,
-      VPAInterval,
-      VPAAmount,
-    });
-
-    onNewAmortizationTable(amortizationTable);
-  }, [
+const Form = () => {
+  const {
     months,
     capital,
     tae,
     startDate,
-    VPAInterval,
-    VPAAmount,
-    onNewAmortizationTable,
-  ]);
+    vpaAmount,
+    vpaInterval,
+    setMonths,
+    setCapital,
+    setTae,
+    setStartDate,
+    setVpaAmount,
+    setVpaInterval,
+  } = useFormStore((state) => state);
 
   return (
     <form>
@@ -82,28 +60,22 @@ const Form = ({ onNewAmortizationTable = () => {} }) => {
         <Input
           type="number"
           label="Voluntary amort. amount"
-          value={VPAAmount}
+          value={vpaAmount}
           subtitle="How much extra you can pay?"
           step={1}
           min={0}
-          onChange={(e) => setVPAAmount(e.target.value)}
+          onChange={(e) => setVpaAmount(e.target.value)}
         />
         <Input
           type="number"
           label="Voluntary amort. interval"
           step={1}
           min={0}
-          value={VPAInterval}
-          onChange={(e) => setVPAInterval(e.target.value)}
-          subtitle={`${VPAAmount} each ${VPAInterval} months`}
+          value={vpaInterval}
+          onChange={(e) => setVpaInterval(e.target.value)}
+          subtitle={`${vpaAmount} each ${vpaInterval} months`}
         />
       </div>
-      {/* <div className="h-6" /> */}
-      {/* <h3 className="text-xl font-bold uppercase flex items-center gap-8">
-        Voluntary periodic amortization
-      </h3> */}
-      {/* <div className="h-6" /> */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
     </form>
   );
 };

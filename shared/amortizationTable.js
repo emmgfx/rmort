@@ -5,8 +5,8 @@ const getAmortizationTable = ({
   capital = 0,
   startDate = new Date(),
   tae = 0,
-  VPAAmount = 0,
-  VPAInterval = 0,
+  vpaAmount = 0,
+  vpaInterval = 0,
 }) => {
   const fees = [];
 
@@ -40,24 +40,24 @@ const getAmortizationTable = ({
       date: new Date(currentDate),
     });
 
-    const isVPAConfigured = VPAAmount > 0 && VPAInterval > 0;
+    const isVpaConfigured = vpaAmount > 0 && vpaInterval > 0;
 
-    if (!isVPAConfigured) continue;
-    const currentMonthNeedsVPA = currentMonth % VPAInterval == 0;
-    if (!currentMonthNeedsVPA) continue;
-    const canDoVPA = currentMonthNeedsVPA && pendingCapital > VPAAmount;
-    if (!canDoVPA) continue;
+    if (!isVpaConfigured) continue;
+    const currentMonthNeedsVpa = currentMonth % vpaInterval == 0;
+    if (!currentMonthNeedsVpa) continue;
+    const canDoVpa = currentMonthNeedsVpa && pendingCapital > vpaAmount;
+    if (!canDoVpa) continue;
 
-    pendingCapital -= VPAAmount;
+    pendingCapital -= vpaAmount;
 
     fees.push({
       type: "voluntary",
       month: currentMonth,
       year: Math.floor((currentMonth - 1) / 12),
-      fee: parseFloat(VPAAmount),
+      fee: parseFloat(vpaAmount),
       interests: 0,
       interestsSumatory: interestsSumatory,
-      amortization: parseFloat(VPAAmount),
+      amortization: parseFloat(vpaAmount),
       pendingCapital: pendingCapital,
       date: new Date(currentDate),
     });
