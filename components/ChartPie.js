@@ -23,7 +23,6 @@ const ChartPie = ({ amortizationTable = [] }) => {
     0
   );
 
-  console.log({ capitalMandatory, capitalVoluntary, interests });
   const data = [
     {
       name: "Capital (M)",
