@@ -1,19 +1,11 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
-import { useMountEffect } from "@react-hookz/web";
-import { useRouter, useSearchParams } from "next/navigation";
-
 import { Input } from "./Input";
 
 import { monthsToYearsAndMonths } from "../shared/utils";
 import { useFormStore } from "../store/form";
 
 export const Form = ({ currentEuribor: _currentEuribor }) => {
-  const searchParams = useSearchParams();
-
-  const router = useRouter();
-
   const {
     months,
     capital,
@@ -21,7 +13,6 @@ export const Form = ({ currentEuribor: _currentEuribor }) => {
     startDate,
     vpaAmount,
     vpaInterval,
-    currentEuribor,
     setMonths,
     setCapital,
     setTae,
@@ -31,51 +22,7 @@ export const Form = ({ currentEuribor: _currentEuribor }) => {
     setCurrentEuribor,
   } = useFormStore((state) => state);
 
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    // Months:
-    if (Boolean(months)) params.set("months", months);
-    else params.delete("months");
-    // Capital:
-    if (Boolean(capital)) params.set("capital", capital);
-    else params.delete("capital");
-    // TAE:
-    if (Boolean(tae)) params.set("tae", tae);
-    else params.delete("tae");
-    // Start date:
-    if (Boolean(startDate)) params.set("startDate", startDate);
-    else params.delete("startDate");
-    // VPA amount:
-    if (Boolean(vpaAmount)) params.set("vpaAmount", vpaAmount);
-    else params.delete("vpaAmount");
-    // VPA interval:
-    if (Boolean(vpaInterval)) params.set("vpaInterval", vpaInterval);
-    else params.delete("vpaInterval");
-
-    router.replace("/?" + params.toString());
-  }, [
-    capital,
-    months,
-    router,
-    searchParams,
-    startDate,
-    tae,
-    vpaAmount,
-    vpaInterval,
-  ]);
-
-  useMountEffect(() => {
-    if (searchParams.has("months")) setMonths(searchParams.get("months"));
-    if (searchParams.has("capital")) setCapital(searchParams.get("capital"));
-    if (searchParams.has("tae")) setTae(searchParams.get("tae"));
-    if (searchParams.has("startDate"))
-      setStartDate(searchParams.get("startDate"));
-    if (searchParams.has("vpaAmount"))
-      setVpaAmount(searchParams.get("vpaAmount"));
-    if (searchParams.has("vpaInterval"))
-      setVpaInterval(searchParams.get("vpaInterval"));
-    setCurrentEuribor(_currentEuribor);
-  });
+  setCurrentEuribor(_currentEuribor);
 
   return (
     <form>

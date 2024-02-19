@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import { Form } from "../components/Form";
 import { Header } from "../components/Header";
 
 import { Results } from "../components/Results";
+import { SyncSearchParams } from "../components/SyncSearchParams";
 
 export default async function Page() {
   const url = "https://euribor.p.rapidapi.com/all";
@@ -27,6 +29,9 @@ export default async function Page() {
 
   return (
     <>
+      <Suspense>
+        <SyncSearchParams />
+      </Suspense>
       <div className="container mx-auto p-5 md:p-10">
         <div className="grid gird-cols-1 md:grid-cols-[25%_75%] gap-16">
           <div className="">
