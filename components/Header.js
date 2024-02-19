@@ -1,4 +1,4 @@
-const Header = () => (
+export const Header = () => (
   <header>
     <h1 className="text-3xl font-extrabold">RMORT? What&apos;s this?</h1>
     <div className="h-8" />
@@ -36,5 +36,3 @@ const Header = () => (
     </p>
   </header>
 );
-
-export default Header;

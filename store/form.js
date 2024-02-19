@@ -7,10 +7,12 @@ export const useFormStore = create((set) => ({
   startDate: new Date().toISOString().substring(0, 10),
   vpaAmount: 0,
   vpaInterval: 0,
+  currentEuribor: 0,
   setMonths: (months) => set({ months }),
   setCapital: (capital) => set({ capital }),
-  setTae: (tae) => set({ tae }),
+  setTae: (tae) => set({ tae: Number(tae) }),
   setStartDate: (startDate) => set({ startDate }),
   setVpaAmount: (vpaAmount) => set({ vpaAmount }),
   setVpaInterval: (vpaInterval) => set({ vpaInterval }),
+  setCurrentEuribor: (currentEuribor) => set({ currentEuribor }),
 }));

@@ -9,7 +9,7 @@ import {
 
 const COLORS = ["#f8dc46", "#82ca9d", "#f44336"];
 
-const ChartPie = ({ amortizationTable = [] }) => {
+export const ChartPie = ({ amortizationTable = [] }) => {
   const capitalMandatory = amortizationTable.reduce((acc, row) => {
     if (row.type === "mandatory") return acc + row.amortization;
     return acc;
@@ -88,5 +88,3 @@ const renderCustomizedLabel = ({
     </text>
   );
 };
-
-export default ChartPie;

@@ -1,6 +1,6 @@
 import { roundToTwo } from "./utils";
 
-const getAmortizationTable = ({
+export const getAmortizationTable = ({
   months = 0,
   capital = 0,
   startDate = new Date(),
@@ -65,5 +65,3 @@ const getAmortizationTable = ({
 
   return fees;
 };
-
-export default getAmortizationTable;

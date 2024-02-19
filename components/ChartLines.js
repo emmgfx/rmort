@@ -9,7 +9,7 @@ import {
   YAxis,
 } from "recharts";
 
-const ChartLines = ({ amortizationTable = [] }) => {
+export const ChartLines = ({ amortizationTable = [] }) => {
   const data =
     amortizationTable.length > 12
       ? amortizationTable
@@ -76,5 +76,3 @@ const ChartLines = ({ amortizationTable = [] }) => {
     </ResponsiveContainer>
   );
 };
-
-export default ChartLines;

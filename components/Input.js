@@ -1,4 +1,4 @@
-const Input = ({ label, subtitle, ...props }) => (
+export const Input = ({ label, subtitle, ...props }) => (
   <div>
     <label className="block mb-2 text-sm font-bold uppercase">{label}</label>
     <input
@@ -9,5 +9,3 @@ const Input = ({ label, subtitle, ...props }) => (
     <div className="text-xs text-slate-300 text-right">{subtitle}</div>
   </div>
 );
-
-export default Input;

@@ -2,7 +2,7 @@ import { twMerge } from "tailwind-merge";
 
 import { numberFormat } from "../shared/utils";
 
-const Table = ({ amortizationTable }) => {
+export const Table = ({ amortizationTable }) => {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-left table-auto">
@@ -54,5 +54,3 @@ const Table = ({ amortizationTable }) => {
     </div>
   );
 };
-
-export default Table;
