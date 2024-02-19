@@ -37,7 +37,6 @@ export const SyncSearchParams = () => {
       setVpaAmount(searchParams.get("vpaAmount"));
     if (searchParams.has("vpaInterval"))
       setVpaInterval(searchParams.get("vpaInterval"));
-    setCurrentEuribor(_currentEuribor);
   });
 
   // When store changes, update searchParams

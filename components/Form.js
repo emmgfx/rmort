@@ -4,6 +4,7 @@ import { Input } from "./Input";
 
 import { monthsToYearsAndMonths } from "../shared/utils";
 import { useFormStore } from "../store/form";
+import { useMountEffect } from "@react-hookz/web";
 
 export const Form = ({ currentEuribor: _currentEuribor }) => {
   const {
@@ -22,7 +23,9 @@ export const Form = ({ currentEuribor: _currentEuribor }) => {
     setCurrentEuribor,
   } = useFormStore((state) => state);
 
-  setCurrentEuribor(_currentEuribor);
+  useMountEffect(() => {
+    setCurrentEuribor(_currentEuribor);
+  });
 
   return (
     <form>
