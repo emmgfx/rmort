@@ -10,19 +10,19 @@
   },
   "dependencies": {
     "@react-hookz/web": "^24.0.4",
-    "next": "^14.1.0",
+    "next": "^14.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "zustand": "^4.5.1"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",
-    "autoprefixer": "^10.4.17",
-    "eslint": "^8.56.0",
-    "eslint-config-next": "^14.1.0",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^9.1.0",
+    "eslint-config-next": "^14.2.2",
     "postcss": "^8.4.33",
     "recharts": "^2.10.4",
-    "tailwind-merge": "^2.2.0",
-    "tailwindcss": "^3.4.1"
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss": "^3.4.3"
   }
 }
